@@ -27,4 +27,10 @@ angular.module('App')
   };
 
   $scope.getRestaurants();
+
+  $scope.hapus = function(id){
+    Restaurant.deleteResto(id);
+  }
+
+
 });
