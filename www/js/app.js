@@ -1,4 +1,4 @@
-angular.module('App', ['ionic'])
+angular.module('App', ['ionic','ngCordova'])
 
 .config(function ($stateProvider, $urlRouterProvider) {
 
@@ -42,7 +42,7 @@ angular.module('App', ['ionic'])
 
 })
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform,$cordovaSQLite) {
   $ionicPlatform.ready(function() {
     if(window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
@@ -50,5 +50,20 @@ angular.module('App', ['ionic'])
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
+
+    // define database
+    if(window.cordova) {
+      // App syntax (platform)
+      db = $cordovaSQLite.openDB("myapp.db");
+    } else {
+      // Ionic serve syntax (browser)
+      db = window.openDatabase("myapp.db", "1.0", "My app", -1);
+    }
+
+    //create initial table &data
+    $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS restaurant (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, address TEXT, city TEXT, image_url)");
+    
+    $cordovaSQLite.execute(db, "INSERT INTO restaurant(name,address,city) values(\'Restoran Padang sederhana\', \'jl.jalan-jalan\', \'jakarta\')");
+
   });
 })
