@@ -17,9 +17,17 @@ angular.module('App')
   
 
   //#1 baca localStorage
-  $scope.weather = JSON.parse(localStorage.getItem('cuaca'),null);    
+  $scope.weather = JSON.parse(localStorage.getItem('cuaca'),null);  
+  //cek akses terakhir
+  akses_terakhir = localStorage.getItem('waktu_akses');
+  waktu_sekarang = Date.now(); 
+  selisih = waktu_sekarang - akses_terakhir;
+  //selisih dalam milidetik
+  selisih_menit = selisih / 60000; 
+  console.log('selisih_menit:',selisih_menit);
+  
   //#2 jika belum ada data (localStorage=null), baca ke server
-  if($scope.weather == null){
+  if($scope.weather == null || selisih_menit > 15 ){
       $ionicLoading.show();
       $http.get('https://ionic-in-action-api.herokuapp.com/weather').success(function (weather) {
         $scope.weather = weather;
@@ -27,6 +35,8 @@ angular.module('App')
         localStorage.setItem('cuaca',JSON.stringify($scope.weather));
         //simpan waktu akses
         // ----code here----
+        console.log(Date.now());
+        localStorage.setItem('waktu_akses',Date.now());
         $ionicLoading.hide();
       }).error(function (err) {
         $ionicLoading.show({
