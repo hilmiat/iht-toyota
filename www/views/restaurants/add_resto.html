@@ -1,0 +1,24 @@
+<ion-modal-view>
+	<ion-content>
+		<form ng-submit="simpan(restaurant)">
+			<div class="list">
+				<label class="item item-input">
+					<input type="text" placeholder="Name"
+						ng-model="restaurant.name">
+				</label>
+				
+				<label class="item item-input">
+					<input type="text" placeholder="City"
+						ng-model="restaurant.city">
+				</label>
+				<label class="item item-input">
+					<textarea placeholder="Address"
+						rows="8"
+						ng-model="restaurant.address">
+					</textarea>
+				</label>
+				<button class="button button-full button-positive">Simpan</button>
+			</div>
+		</form>
+	</ion-content>
+</ion-modal-view>

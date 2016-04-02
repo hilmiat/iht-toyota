@@ -1,6 +1,6 @@
 angular.module('App')
 .controller('RestaurantsController', function ($scope, $http,
-  Restaurant) {
+  Restaurant,$ionicModal) {
 
   $scope.page = 0;
   $scope.total = 1;
@@ -30,7 +30,32 @@ angular.module('App')
 
   $scope.hapus = function(id){
     Restaurant.deleteResto(id);
+    console.log('menghapus data id:',id);
+    $scope.getRestaurants();
   }
 
+  $scope.modal;
+  //inisialisasi modal
+      $scope.modal;
+      $ionicModal.fromTemplateUrl(
+          'views/restaurants/add_resto.html',
+          {
+            scope:$scope,
+            animation: 'slide-in-up'
+          }
+        ).then(function(modal){
+          $scope.modal = modal;
+          }
+      );
+
+  $scope.add = function(){
+    $scope.modal.show();
+  }
+
+  $scope.simpan = function(restaurant){
+    Restaurant.addResto(restaurant);
+    $scope.modal.hide();
+    $scope.getRestaurants();
+  }
 
 });
