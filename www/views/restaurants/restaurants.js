@@ -1,39 +1,16 @@
 angular.module('App')
 .controller('RestaurantsController', function ($scope, $http,
-  $ionicPlatform,$cordovaSQLite,$q) {
+  Restaurant) {
 
   $scope.page = 0;
   $scope.total = 1;
   $scope.restaurants = [];
 
-  query_data = function(){
-    var q = $q.defer();
-    //mengambil data dari database
-    $ionicPlatform.ready(function(){
-        $cordovaSQLite.execute(db,"SELECT * FROM restaurant")
-        .then(function(result){
-          console.log(result);
-          q.resolve(result);
-        },function(error){
-          console.log(error);
-          q.reject();
-        })
-    }
-    );
-    return q.promise;
-  }
-
-  getAll = function(result){
-      var out = [];
-      for (var i = 0;i < result.rows.length;i++) {
-        out.push(result.rows.item(i));
-      };
-      return out;
-  }
 
   $scope.getRestaurants = function () {
-    query_data().then(function(result){
-        $scope.restaurants = getAll(result);
+    console.log(Restaurant.getAll());
+    Restaurant.getAll().then(function(result){
+      $scope.restaurants = result;
     });
 
     // $scope.page++;
