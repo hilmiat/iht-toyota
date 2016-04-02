@@ -1,4 +1,5 @@
 var db = null;
+
 angular.module('App', ['ionic','ngCordova'])
 
 .config(function ($stateProvider, $urlRouterProvider) {
@@ -64,7 +65,7 @@ angular.module('App', ['ionic','ngCordova'])
     //create initial table &data
     $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS restaurant (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, address TEXT, city TEXT, image_url)");
     
-    $cordovaSQLite.execute(db, "INSERT INTO restaurant(name,address,city) values(\'Restoran Padang sederhana\', \'jl.jalan-jalan\', \'jakarta\')");
+    // $cordovaSQLite.execute(db, "INSERT INTO restaurant(name,address,city) values(\'Restoran Padang sederhana\', \'jl.jalan-jalan\', \'jakarta\')");
 
   });
 })
