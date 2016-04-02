@@ -14,16 +14,28 @@ angular.module('App')
 // to build an Angular service for loading of weather data so the controller doesn’t
 // use $http directly.
 
-  $ionicLoading.show();
-  $http.get('https://ionic-in-action-api.herokuapp.com/weather').success(function (weather) {
-    $scope.weather = weather;
-    $ionicLoading.hide();
-  }).error(function (err) {
-    $ionicLoading.show({
-      template: 'Could not load weather. Please try again later.',
-      duration: 3000
-    });
-  });
+  
+
+  //#1 baca localStorage
+  $scope.weather = JSON.parse(localStorage.getItem('cuaca'),null);    
+  //#2 jika belum ada data (localStorage=null), baca ke server
+  if($scope.weather == null){
+      $ionicLoading.show();
+      $http.get('https://ionic-in-action-api.herokuapp.com/weather').success(function (weather) {
+        $scope.weather = weather;
+        //simpan data ke localStorage
+        localStorage.setItem('cuaca',JSON.stringify($scope.weather));
+        //simpan waktu akses
+        // ----code here----
+        $ionicLoading.hide();
+      }).error(function (err) {
+        $ionicLoading.show({
+          template: 'Could not load weather. Please try again later.',
+          duration: 3000
+        });
+      });
+  }
+
 
   $scope.getDirection = function (degree) {
     if (degree > 338) {

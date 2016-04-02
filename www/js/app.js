@@ -5,7 +5,8 @@ angular.module('App', ['ionic'])
   // lihat localStorage untuk menentukan halaman default
   default_view = localStorage.getItem('default_view');
   if(default_view==null){
-    // jika null (pertama kali membuka aplikasi, maka tampilkan halaman tour)
+    // jika null (pertama kali membuka aplikasi, 
+    // maka tampilkan halaman tour)
     default_view = '/tour';
     // simpan data di localStorage agar ketika aplikasi dibuka untuk kedua kalinya
     // yg tampil tidak lagi tour
