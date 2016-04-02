@@ -1,3 +1,4 @@
+var db = null;
 angular.module('App', ['ionic','ngCordova'])
 
 .config(function ($stateProvider, $urlRouterProvider) {

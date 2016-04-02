@@ -42,6 +42,11 @@ update app.js to use ngCordova
 	angular.module('App', ['ionic','ngCordova'])
 ``` 
 
+create global variable db
+``` javascript
+	var db = null;
+```
+
 #### Step 4:
 Initialize database
 ``` javascript
