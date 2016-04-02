@@ -1,5 +1,6 @@
 angular.module('App')
-.controller('WeatherController', function ($scope, $http, $ionicLoading) {
+.controller('WeatherController', function ($scope, $http, 
+  $ionicLoading,Weather) {
   var directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
 
 // Challenge #1
@@ -13,38 +14,9 @@ angular.module('App')
 // Create a weather service —This demo uses $http in the controller to load data. Try
 // to build an Angular service for loading of weather data so the controller doesn’t
 // use $http directly.
-
+  $scope.weather = Weather.getWeather();
   
 
-  //#1 baca localStorage
-  $scope.weather = JSON.parse(localStorage.getItem('cuaca'),null);  
-  //cek akses terakhir
-  akses_terakhir = localStorage.getItem('waktu_akses');
-  waktu_sekarang = Date.now(); 
-  selisih = waktu_sekarang - akses_terakhir;
-  //selisih dalam milidetik
-  selisih_menit = selisih / 60000; 
-  console.log('selisih_menit:',selisih_menit);
-  
-  //#2 jika belum ada data (localStorage=null), baca ke server
-  if($scope.weather == null || selisih_menit > 15 ){
-      $ionicLoading.show();
-      $http.get('https://ionic-in-action-api.herokuapp.com/weather').success(function (weather) {
-        $scope.weather = weather;
-        //simpan data ke localStorage
-        localStorage.setItem('cuaca',JSON.stringify($scope.weather));
-        //simpan waktu akses
-        // ----code here----
-        console.log(Date.now());
-        localStorage.setItem('waktu_akses',Date.now());
-        $ionicLoading.hide();
-      }).error(function (err) {
-        $ionicLoading.show({
-          template: 'Could not load weather. Please try again later.',
-          duration: 3000
-        });
-      });
-  }
 
 
   $scope.getDirection = function (degree) {
